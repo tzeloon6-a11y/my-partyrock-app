@@ -69,7 +69,16 @@ jobs:
           BUCKET=$(get_output BucketName)
           aws s3 sync frontend/ "s3://$BUCKET" --cache-control no-cache
 
-      - name: Print website URL
+      - name: Print URLs
         run: |
-          aws cloudformation describe-stacks --stack-name smartmed-cycle \
-            --query "Stacks[0].Outputs[?OutputKey=='WebsiteUrl'].OutputValue" --output text
+          get_output() {
+            aws cloudformation describe-stacks --stack-name smartmed-cycle \
+              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text
+          }
+
+          echo "Frontend URL: $(get_output WebsiteUrl)"
+          echo "API URL (ExtractfromPhotoUrl):   $(get_output ExtractfromPhotoUrl)"
+          echo "API URL (MedicineCardUrl):       $(get_output MedicineCardUrl)"
+          echo "API URL (MyMedicineSummaryUrl):  $(get_output MyMedicineSummaryUrl)"
+          echo "API URL (MyReturnPlanUrl):       $(get_output MyReturnPlanUrl)"
+          echo "API URL (SmartMedHelpUrl):       $(get_output SmartMedHelpUrl)"
