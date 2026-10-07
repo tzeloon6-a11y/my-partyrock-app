@@ -98,7 +98,7 @@ async function streamToContainer(url, body, container, { onDone, onError } = {})
 
     const resp = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
 
@@ -346,7 +346,7 @@ async function streamChatReply(message) {
     }
     const resp = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
