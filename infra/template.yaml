@@ -61,7 +61,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
-                Cors:
+        Cors:
           AllowOrigins:
             - "*"
           AllowMethods:
@@ -87,7 +87,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
-                Cors:
+        Cors:
           AllowOrigins:
             - "*"
           AllowMethods:
@@ -113,7 +113,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
-                Cors:
+        Cors:
           AllowOrigins:
             - "*"
           AllowMethods:
@@ -139,7 +139,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
-                Cors:
+        Cors:
           AllowOrigins:
             - "*"
           AllowMethods:
@@ -165,7 +165,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
-                Cors:
+        Cors:
           AllowOrigins:
             - "*"
           AllowMethods:
