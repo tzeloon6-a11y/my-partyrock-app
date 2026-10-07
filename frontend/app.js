@@ -1,12 +1,14 @@
 // SmartMed Cycle — frontend application logic
 // Handles markdown-line streaming render, file uploads, and all widget wiring.
 
+const API_KEY = 'JDVUCGISBKDGCIUVUGDM';
+
 const STREAM_URLS = {
-  extract_from_photo: '__URL_EXTRACT_FROM_PHOTO__',
-  medicine_card: '__URL_MEDICINE_CARD__',
-  my_medicine_summary: '__URL_MY_MEDICINE_SUMMARY__',
-  my_return_plan: '__URL_MY_RETURN_PLAN__',
-  smartmed_help: '__URL_SMARTMED_HELP__',
+  extract_from_photo: 'https://cmctzcoiqgy7kfnobf4oks2hke0hwovl.lambda-url.ap-southeast-1.on.aws/',
+  medicine_card: 'https://67kwx5o7at7pwkdz4aawjimhf40mcsgf.lambda-url.ap-southeast-1.on.aws/',
+  my_medicine_summary: 'https://e5kmcru3qrdjmykrtni6odtfzu0qcyet.lambda-url.ap-southeast-1.on.aws/',
+  my_return_plan: 'https://6mdiivzhfrmii3d43bg6bl646q0aucvv.lambda-url.ap-southeast-1.on.aws/',
+  smartmed_help: 'https://pyjpj4mrzcd5yo7j7nc2cigfai0tprmo.lambda-url.ap-southeast-1.on.aws/',
 };
 
 // ---------------------------------------------------------------------
@@ -96,7 +98,7 @@ async function streamToContainer(url, body, container, { onDone, onError } = {})
 
     const resp = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
       body: JSON.stringify(body),
     });
 
@@ -344,7 +346,7 @@ async function streamChatReply(message) {
     }
     const resp = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
       body: JSON.stringify(body),
     });
     if (!resp.ok) throw new Error(`Request failed (${resp.status})`);
