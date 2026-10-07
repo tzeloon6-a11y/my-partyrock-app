@@ -13,7 +13,7 @@ from flask import Flask, Response, request, stream_with_context
 
 app = Flask(__name__)
 
-AWS_REGION = os.environ.get("AWS_REGION", "ap-southeast-1")
+AWS_REGION = os.environ.get("AWS_REGION", "ap-southeast-5")
 MODEL_ID = "global.anthropic.claude-haiku-4-5-20251001-v1:0"
 ANTHROPIC_VERSION = "bedrock-2023-05-31"
 
