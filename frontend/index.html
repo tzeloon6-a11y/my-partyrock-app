@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartMed Cycle</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+
+  <div class="top-bar">
+    <button id="run-all-btn" class="run-all-btn">▶️ Run All</button>
+  </div>
+
+  <!-- Widget 1: SmartMed Cycle (static) -->
+  <section class="card static">
+    <h1>💊 SmartMed Cycle</h1>
+    <p><em>Your personal medicine companion — understand, check, ask, and return responsibly.</em></p>
+    <hr>
+    <p>🔎 <strong>Understand My Medicine</strong> — snap or type a label to get a plain-language summary</p>
+    <p>🛡️ <strong>Check My Precautions</strong> — spot what to watch for and what to ask</p>
+    <p>💬 <strong>Ask About My Medicines</strong> — chat with SmartMed Help, any time</p>
+    <p>♻️ <strong>Return Unused Medicines</strong> — find a verified drop-off point near you</p>
+    <blockquote>⚠️ <strong>Heads up:</strong> SmartMed Cycle is a preparation tool — not a substitute for pharmacist or prescriber advice. Always compare outputs with your original label.</blockquote>
+  </section>
+
+  <!-- Widget 2: Section 1 intro (static) -->
+  <section class="card static">
+    <h2>Section 1 · Understand My Medicine</h2>
+    <p>Type medicine details into <strong>Medicine Details</strong> or upload a readable label photo — either is enough. If you use both, the Medicine Card will compare them and flag any conflicts.</p>
+    <p>Compare the Medicine Card with your original label before continuing to Section 2.</p>
+  </section>
+
+  <div class="row">
+    <!-- Widget 3: Medicine Details -->
+    <section class="card">
+      <label class="field-label" for="medicine-details">Medicine Details <span class="optional-tag">Optional</span></label>
+      <p class="hint">💊 Type the medicine name and strength, if known. Add the label instructions if available.
+📝 Example: Metformin 500 mg — take one tablet twice daily with meals.</p>
+      <textarea id="medicine-details" placeholder="e.g. Metformin 500 mg — take one tablet twice daily with meals"></textarea>
+    </section>
+
+    <div>
+      <!-- Widget 4: Preferred Language -->
+      <section class="card">
+        <label class="field-label" for="preferred-language">Preferred Language</label>
+        <select id="preferred-language">
+          <option value="English" selected>English</option>
+          <option value="Bahasa Melayu">Bahasa Melayu</option>
+          <option value="中文">中文</option>
+        </select>
+      </section>
+
+      <!-- Widget 5: Patient Age -->
+      <section class="card">
+        <label class="field-label" for="patient-age">Patient Age</label>
+        <select id="patient-age">
+          <option value="Not provided" selected>Not provided</option>
+          <option value="Child : 0-12">Child : 0-12</option>
+          <option value="Teenager : 13-17">Teenager : 13-17</option>
+          <option value="Adult : 18-60">Adult : 18-60</option>
+          <option value="Older Adult : 60+">Older Adult : 60+</option>
+        </select>
+      </section>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Widget 6: Medicine Photo or Scan -->
+    <section class="card">
+      <label class="field-label">Medicine Photo or Scan</label>
+      <div class="dropzone" id="medicine-photo-zone">
+        <div class="dropzone-icon">📤</div>
+        <div>Click or drag a file here</div>
+        <div class="instructions">📸 Upload a clear photo of the medicine label.
+🙈 Cover your name and personal details if you wish.
+✅ The medicine name, strength, and dosing instructions must be visible and readable.
+Accepted: JPG, PNG, WEBP</div>
+        <input type="file" id="medicine-photo-input" accept="image/jpeg,image/png,image/webp" />
+      </div>
+      <div class="file-preview" id="medicine-photo-preview"></div>
+    </section>
+
+    <!-- Widget 7: Extract from Photo -->
+    <section class="card ai-panel">
+      <div class="panel-head">
+        <span class="panel-title">🧬 Extract from Photo</span>
+        <button class="run-btn" id="run-extract-from-photo">▶ Run</button>
+      </div>
+      <div class="output-box" id="extract-from-photo-output">
+        <p class="placeholder-text">Upload a photo, then press Run — or use Run All.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Widget 8: Medicine Card -->
+  <section class="card ai-panel">
+    <div class="panel-head">
+      <span class="panel-title">💊 Medicine Card</span>
+      <button class="run-btn" id="run-medicine-card">▶ Run</button>
+    </div>
+    <div class="output-box" id="medicine-card-output">
+      <p class="placeholder-text">💊 To get started, upload a label photo or type the medicine name above.</p>
+    </div>
+  </section>
+
+  <!-- Widget 9: Section 2 intro (static) -->
+  <section class="card static">
+    <h2>Section 2 · Check My Precautions</h2>
+    <p>Add other medicines and allergy history below, if known. Blank means not provided — it does not mean none. Generate this section to get a list of points to discuss with your pharmacist.</p>
+    <blockquote>If you updated Section 1, regenerate the Medicine Card first, then regenerate this section.</blockquote>
+  </section>
+
+  <div class="row">
+    <!-- Widget 10: Other Medicines and Supplements -->
+    <section class="card">
+      <label class="field-label" for="other-medicines">Other Medicines and Supplements <span class="optional-tag">Optional</span></label>
+      <p class="hint">💊 Other medicines you are currently taking.
+📏 Add names and doses if known.
+📝 Example: Atorvastatin 20 mg once daily; Aspirin 100 mg once daily.</p>
+      <textarea id="other-medicines" placeholder="e.g. Atorvastatin 20 mg once daily; Aspirin 100 mg once daily"></textarea>
+    </section>
+
+    <!-- Widget 11: Medicine Allergies and Reactions -->
+    <section class="card">
+      <label class="field-label" for="medicine-allergies">Medicine Allergies and Reactions <span class="optional-tag">Optional</span></label>
+      <p class="hint">⚠️ Any known medicine or food allergies, and what reaction happened.
+📝 Example: Penicillin — rash and swelling. Write 'None known' or 'Not sure' if applicable.
+🌿 Also note any supplements or herbal products you take.</p>
+      <textarea id="medicine-allergies" placeholder="e.g. Penicillin — rash and swelling. None known / Not sure"></textarea>
+    </section>
+  </div>
+
+  <!-- Widget 12: My Medicine Summary -->
+  <section class="card ai-panel">
+    <div class="panel-head">
+      <span class="panel-title">🛡️ My Medicine Summary</span>
+      <button class="run-btn" id="run-my-medicine-summary">▶ Run</button>
+    </div>
+    <div class="output-box" id="my-medicine-summary-output">
+      <p class="placeholder-text">Complete Section 1 first, then press Run — or use Run All.</p>
+    </div>
+  </section>
+
+  <!-- Widget 13: Section 3 intro (static) -->
+  <section class="card static">
+    <h2>Section 3 · Ask About My Medicines</h2>
+    <p>Ask anything about your medicine, precautions, or what to tell your pharmacist.</p>
+    <p>💡 <strong>Try:</strong> <em>"Prepare my pharmacist summary"</em> — get a ready-to-share summary with your medicine details, uncertainties, and questions to ask.</p>
+  </section>
+
+  <!-- Widget 14: Emergency Notice (static) -->
+  <section class="card emergency">
+    <p>🚨 <strong>Medical emergency?</strong> In Malaysia, call <strong>999</strong> now. Outside Malaysia, call your local emergency number. Do not wait for this tool.</p>
+  </section>
+
+  <!-- Widget 15: SmartMed Help (chatbot) -->
+  <section class="card ai-panel">
+    <div class="panel-head">
+      <span class="panel-title">💬 SmartMed Help</span>
+    </div>
+    <div class="chat-box output-box auto-height" id="chat-box">
+      <div class="chat-bubble assistant">Hi! 👋 I'm SmartMed Help. Ask me anything about your medicine.
+
+Try:
+- 💬 Explain this instruction simply
+- ⏰ What if I miss a dose?
+- 📋 Prepare my pharmacist summary
+- 🧠 Quiz me on my medicine
+
+🚨 Medical emergency? Call 999 (Malaysia) or your local emergency number now.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Ask anything. For example: explain this instruction, prepare my pharmacist summary, quiz me" />
+      <button id="chat-send">Send</button>
+    </div>
+  </section>
+
+  <!-- Widget 16: Section 4 intro (static) -->
+  <section class="card static">
+    <h2>♻️ Section 4 · Return Unused Medicines</h2>
+    <p>🗑️ You can return <strong>any</strong> unwanted medicine — prescription medicines, over-the-counter products, vitamins, supplements, or medicines found at home.</p>
+    <p>📍 Enter the medicine details and your location below and we'll help you find a verified drop-off point near you!</p>
+    <blockquote>🔴 <strong>Not sure if you should stop taking a medicine?</strong> Check with your pharmacist or prescriber <strong>before</strong> returning it.</blockquote>
+    <p>🔗 <strong>Official return directory:</strong> <a href="https://www.mymedisafe.org.my/" target="_blank" rel="noopener">myMediSAFE</a> — search by state, city, or postcode.</p>
+  </section>
+
+  <div class="row">
+    <!-- Widget 17: Your Location -->
+    <section class="card">
+      <label class="field-label" for="your-location">Your Location <span class="optional-tag">Optional</span></label>
+      <p class="hint">📍 Enter your area, city, or postcode (e.g. 50480 Kuala Lumpur, Petaling Jaya, Johor Bahru) — we will search for verified return points near you.</p>
+      <textarea id="your-location" placeholder="e.g. 50480 Kuala Lumpur"></textarea>
+    </section>
+
+    <!-- Widget 18: Return Item Details -->
+    <section class="card">
+      <label class="field-label" for="return-item-details">Return Item Details <span class="optional-tag">Optional</span></label>
+      <p class="hint">💊 Medicine name and form (e.g. Paracetamol 500 mg tablets)
+🏷️ Prescription or over-the-counter (if known)
+🔢 Quantity remaining (leave blank if unsure)
+🧴 Item type if special: liquid / inhaler / cream / drops / needles or sharps
+❓ Reason: expired / no longer needed / course completed / bought but not needed / found at home / unsure</p>
+      <textarea id="return-item-details" placeholder="e.g. Paracetamol 500 mg tablets, OTC, 14 tablets, expired"></textarea>
+    </section>
+  </div>
+
+  <!-- Widget 19: Return Item Photo -->
+  <section class="card">
+    <label class="field-label">Return Item Photo</label>
+    <div class="dropzone" id="return-photo-zone">
+      <div class="dropzone-icon">📤</div>
+      <div>Click or drag a file here</div>
+      <div class="instructions">📦 Optional. Upload a clear photo of the labelled packaging.
+🔍 The label must be visible and readable.
+⚠️ If the image shows only unlabelled pills with no readable label, the assistant will note this and will not attempt to identify the medicine from appearance alone.
+Accepted: JPG, PNG, WEBP</div>
+      <input type="file" id="return-photo-input" accept="image/jpeg,image/png,image/webp" />
+    </div>
+    <div class="file-preview" id="return-photo-preview"></div>
+  </section>
+
+  <!-- Widget 20: My Return Plan -->
+  <section class="card ai-panel">
+    <div class="panel-head">
+      <span class="panel-title">♻️ My Return Plan</span>
+      <button class="run-btn" id="run-my-return-plan">▶ Run</button>
+    </div>
+    <div class="output-box" id="my-return-plan-output">
+      <p class="placeholder-text">💊 Please enter a medicine name or upload a labelled photo to get started.</p>
+    </div>
+  </section>
+
+  <p class="disclaimer-footer">⚠️ SmartMed Cycle is a preparation tool only. It is not a substitute for pharmacist or prescriber advice.</p>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
